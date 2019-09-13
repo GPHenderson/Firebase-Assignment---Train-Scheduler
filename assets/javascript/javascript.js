@@ -26,7 +26,7 @@ var config = {
     // Grabs user input   Lines 27-30 
     var trnName = $("#trn-name-input").val().trim();
     var trnDest = $("#destination-input").val().trim();
-    var trnFrstTime = moment($("#firstTrn-input").val().trim(), "MM/DD/YYYY").format("X");
+    var trnFrstTime = moment($("#firstTrn-input").val().trim(), "HH:mm").format("X");
     var trnFreq = $("#frequency-input").val().trim();
   
     // Creates local "temporary" object for holding employee data  Saving the information for the train 
@@ -59,17 +59,18 @@ var config = {
   database.ref().on("child_added", function(childSnapshot) {
     console.log(childSnapshot.val());
   
+    alert('called');
     // Store everything into a variable. Change to train code reference lines 34-37
-    // var empName = childSnapshot.val().name;
-    // var empRole = childSnapshot.val().role;
-    // var empStart = childSnapshot.val().start;
-    // var empRate = childSnapshot.val().rate;
+    var trnName = childSnapshot.val().name;
+    var trnDest = childSnapshot.val().role;
+    var empStart = childSnapshot.val().start;
+    var empRate = childSnapshot.val().rate;
   
     // // Employee Info
-    // console.log(empName);
-    // console.log(empRole);
-    // console.log(empStart);
-    // console.log(empRate);
+    console.log(trnName);
+    console.log(trnDest);
+    console.log(empStart);
+    console.log(empRate);
   
     // Prettify the employee start         Math file will go here 
     var trnStartPretty = moment.unix(empStart).format("MM/DD/YYYY");
@@ -77,24 +78,24 @@ var config = {
     // Calculate the months worked using hardcore math
     // To calculate the months worked
     var trnMins = moment().diff(moment(empStart, "X"), "months");
-    console.log(empMonths);
+    //console.log(empMonths);
   
     // Calculate the total billed rate
-    var empBilled = empMonths * empRate;
-    console.log(empBilled);
+    //var empBilled = empMonths * empRate;
+    // console.log(empBilled);
   
     // Create the new row    Train name destination/ freq next/ day arrival/ mins away 
     var newRow = $("<tr>").append(
       $("<td>").text(trnName),
       $("<td>").text(trnDest),
       $("<td>").text(trnStartPretty),
-      $("<td>").text(trnFrstTime),
+      $("<td>").text(empStart),
       $("<td>").text(empRate),
-      $("<td>").text(empBilled)
+      $("<td>").text("greg")
     );
   
     // Append the new row to the table
-    $("#employee-table > tbody").append(newRow);
+    $("#train-table > tbody").append(newRow);
   });
   
   // Example Time Math
