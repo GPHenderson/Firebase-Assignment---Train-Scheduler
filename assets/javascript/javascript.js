@@ -59,7 +59,7 @@ var config = {
   database.ref().on("child_added", function(childSnapshot) {
     console.log(childSnapshot.val());
   
-    alert('called');
+    // alert('called');
     // Store everything into a variable. Change to train code reference lines 34-37
     var trnName = childSnapshot.val().name;
     var trnDest = childSnapshot.val().role;
